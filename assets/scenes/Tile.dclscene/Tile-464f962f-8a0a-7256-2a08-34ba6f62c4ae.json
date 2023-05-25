@@ -1,0 +1,54 @@
+{
+  "customName": "Tile",
+  "guid": "464f962f-8a0a-7256-2a08-34ba6f62c4ae",
+  "parentGuid": null,
+  "hierarchyOrder": 0.0,
+  "isExposed": true,
+  "components": [
+    {
+      "nameInCode": "Transform",
+      "nameOfSlot": "Transform",
+      "properties": [
+        {
+          "name": "position",
+          "type": "Vector3",
+          "fixedValue": {
+            "x": 0.5,
+            "y": 0.0586785674,
+            "z": 0.5
+          }
+        },
+        {
+          "name": "rotation",
+          "type": "Quaternion",
+          "fixedValue": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          }
+        },
+        {
+          "name": "scale",
+          "type": "Vector3",
+          "fixedValue": {
+            "x": 0.87283957,
+            "y": -0.0313353539,
+            "z": 0.87283957
+          }
+        }
+      ]
+    },
+    {
+      "nameInCode": "BoxShape",
+      "nameOfSlot": "Shape",
+      "properties": []
+    },
+    {
+      "nameInCode": "TileComponent",
+      "nameOfSlot": "TileComponent",
+      "properties": []
+    }
+  ],
+  "dclEditVersionNumber": "1.0.4"
+}

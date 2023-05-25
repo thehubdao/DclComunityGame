@@ -1,0 +1,60 @@
+{
+  "customName": "Tiles",
+  "guid": "065a1ff0-91d0-4e00-b390-a6f411c1f8b1",
+  "parentGuid": null,
+  "hierarchyOrder": 21.0,
+  "isExposed": false,
+  "components": [
+    {
+      "nameInCode": "Transform",
+      "nameOfSlot": "Transform",
+      "properties": [
+        {
+          "name": "position",
+          "type": "Vector3",
+          "fixedValue": {
+            "x": 3.0,
+            "y": 0.0,
+            "z": 2.0
+          }
+        },
+        {
+          "name": "rotation",
+          "type": "Quaternion",
+          "fixedValue": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          }
+        },
+        {
+          "name": "scale",
+          "type": "Vector3",
+          "fixedValue": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "nameInCode": "FieldComponent",
+      "nameOfSlot": "FieldComponent",
+      "properties": [
+        {
+          "name": "height",
+          "type": "Float",
+          "fixedValue": 8.0
+        },
+        {
+          "name": "width",
+          "type": "Float",
+          "fixedValue": 10.0
+        }
+      ]
+    }
+  ],
+  "dclEditVersionNumber": "1.0.4"
+}
