@@ -1,3 +1,4 @@
+import { EnemyComponent } from "src/components/enemy"
 import { FieldComponent } from "src/components/field"
 import { TileComponent } from "src/components/tile"
 import { TurretComponent } from "src/components/turret"
@@ -40,6 +41,14 @@ export type DceEntity = {
     hide: () => void
 }
 
+export type WithGLTFShape = {
+    gLTFShape: GLTFShape
+}
+
+export type WithEnemyComponent = {
+    enemyComponent: EnemyComponent
+}
+
 export type WithFieldComponent = {
     fieldComponent: FieldComponent
 }
@@ -64,6 +73,11 @@ export type WithTurretComponent = {
     turretComponent: TurretComponent
 }
 
+export type Enemy = DceScene & {
+    exposed: {
+        PlaceHolder: DceEntity & WithGLTFShape & WithEnemyComponent,
+    }
+}
 export type MainScene = DceScene & {
     exposed: {
     }
@@ -80,6 +94,73 @@ export type Turret = DceScene & {
 }
 
 export class SceneFactory {
+    /**
+     * Creates a new instance of the scene Enemy
+     * @param rootEntity specify a root entity for the newly created scene. If null, a new Entity will be generated as the root
+     */
+    static createEnemy(rootEntity: Entity | null = null): Enemy {
+        if (rootEntity == null) {
+            rootEntity = new Entity()
+            const rootEntityTrans = new Transform()
+            rootEntity.addComponent(rootEntityTrans)
+        } else {
+            if (!rootEntity.hasComponent(Transform)) {
+                rootEntity.addComponent(new Transform)
+            }
+        }
+
+        const ent4_PlaceHolder1 = new Entity("PlaceHolder")
+        const ent4_PlaceHolder1Transform = new Transform()
+        ent4_PlaceHolder1Transform.position = new Vector3(0, 0, 0)
+        ent4_PlaceHolder1Transform.rotation = new Quaternion(0, -0.7071068, 0, 0.7071068)
+        ent4_PlaceHolder1Transform.scale = new Vector3(0.1791344, 0.1791344, 0.1791344)
+        if("init" in ent4_PlaceHolder1Transform && typeof ent4_PlaceHolder1Transform.init === "function")
+        {
+            ent4_PlaceHolder1Transform.init(ent4_PlaceHolder1)
+        }
+        ent4_PlaceHolder1.addComponent(ent4_PlaceHolder1Transform)
+        const ent4_PlaceHolder1GLTFShape = new GLTFShape("dcl-edit/build/builder_assets/models/Horizontal_Flying_Taxi_Available.glb")
+        ent4_PlaceHolder1GLTFShape.visible = true
+        ent4_PlaceHolder1GLTFShape.withCollisions = true
+        ent4_PlaceHolder1GLTFShape.isPointerBlocker = true
+        if("init" in ent4_PlaceHolder1GLTFShape && typeof ent4_PlaceHolder1GLTFShape.init === "function")
+        {
+            ent4_PlaceHolder1GLTFShape.init(ent4_PlaceHolder1)
+        }
+        ent4_PlaceHolder1.addComponent(ent4_PlaceHolder1GLTFShape)
+        const ent4_PlaceHolder1EnemyComponent = new EnemyComponent()
+        if("init" in ent4_PlaceHolder1EnemyComponent && typeof ent4_PlaceHolder1EnemyComponent.init === "function")
+        {
+            ent4_PlaceHolder1EnemyComponent.init(ent4_PlaceHolder1)
+        }
+        ent4_PlaceHolder1.addComponent(ent4_PlaceHolder1EnemyComponent)
+
+        ent4_PlaceHolder1.setParent(rootEntity)
+
+        engine.addEntity(rootEntity)
+
+        return {
+            sceneRoot: {
+                entity: rootEntity,
+                transform: rootEntity.getComponent(Transform),
+                show() { engine.addEntity(this.entity) },
+                hide() { engine.removeEntity(this.entity) }
+            },
+            exposed: {
+                PlaceHolder: {
+                    entity: ent4_PlaceHolder1,
+                    transform: ent4_PlaceHolder1Transform,
+                    gLTFShape: ent4_PlaceHolder1GLTFShape,
+                    enemyComponent: ent4_PlaceHolder1EnemyComponent,
+                    show() { engine.addEntity(this.entity) },
+                    hide() { engine.removeEntity(this.entity) }
+                },
+            },
+
+            show() { this.sceneRoot.show() },
+            hide() { this.sceneRoot.hide() }
+        }
+    }
     /**
      * Creates a new instance of the scene MainScene
      * @param rootEntity specify a root entity for the newly created scene. If null, a new Entity will be generated as the root

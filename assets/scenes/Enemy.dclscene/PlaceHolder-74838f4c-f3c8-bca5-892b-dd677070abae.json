@@ -1,0 +1,75 @@
+{
+  "customName": "PlaceHolder",
+  "guid": "74838f4c-f3c8-bca5-892b-dd677070abae",
+  "parentGuid": null,
+  "hierarchyOrder": 0.0,
+  "isExposed": true,
+  "components": [
+    {
+      "nameInCode": "Transform",
+      "nameOfSlot": "Transform",
+      "properties": [
+        {
+          "name": "position",
+          "type": "Vector3",
+          "fixedValue": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        {
+          "name": "rotation",
+          "type": "Quaternion",
+          "fixedValue": {
+            "x": 0.0,
+            "y": -0.7071068,
+            "z": 0.0,
+            "w": 0.707106769
+          }
+        },
+        {
+          "name": "scale",
+          "type": "Vector3",
+          "fixedValue": {
+            "x": 0.179134429,
+            "y": 0.179134429,
+            "z": 0.179134429
+          }
+        }
+      ]
+    },
+    {
+      "nameInCode": "GLTFShape",
+      "nameOfSlot": "Shape",
+      "properties": [
+        {
+          "name": "asset",
+          "type": "Asset",
+          "fixedValue": "7280e965-8938-4759-851f-2bd5b9e8b47b"
+        },
+        {
+          "name": "visible",
+          "type": "Boolean",
+          "fixedValue": true
+        },
+        {
+          "name": "withCollisions",
+          "type": "Boolean",
+          "fixedValue": true
+        },
+        {
+          "name": "isPointerBlocker",
+          "type": "Boolean",
+          "fixedValue": true
+        }
+      ]
+    },
+    {
+      "nameInCode": "EnemyComponent",
+      "nameOfSlot": "EnemyComponent",
+      "properties": []
+    }
+  ],
+  "dclEditVersionNumber": "1.0.4"
+}
