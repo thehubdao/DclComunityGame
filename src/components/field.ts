@@ -1,3 +1,4 @@
+import { WaveManager } from "src/waveManager";
 import { TileComponent } from "./tile";
 import { SceneFactory } from "dcl-edit/build/scripts/scenes"
 
@@ -28,7 +29,10 @@ export class FieldComponent {
     public width = 5;
     public height = 4;
 
-    public entity: Entity|null = null;
+    public entity: Entity | null = null;
+
+    public spawnPoint?: Vector2
+    public destination: Vector2 = new Vector2(0, 0)
 
     init(entity: Entity) {
         this.entity = entity
@@ -51,13 +55,26 @@ export class FieldComponent {
             }
         }
 
-        this.bakePathFinding(this.tiles[3][6])
+        this.bakePathFinding()
 
+        // put self into wave manager
+        WaveManager.instance.field = this
+
+        // set spawnpoint
+        this.spawnPoint = new Vector2(this.width - 1, this.height - 1)
+    }
+
+    // get spawn tile
+    public spawnTile(): TileComponent | undefined {
+        if (!this.spawnPoint)
+            return undefined
+
+        return this.tiles[this.spawnPoint.x][this.spawnPoint.y]
     }
 
     // pathfinding
-    public bakePathFinding(goal: TileComponent) {
-
+    public bakePathFinding() {
+        let goal = this.tiles[this.destination.x][this.destination.y]
         log("Bake Pathfinding")
 
         // Reset the flow field of each tile
@@ -138,17 +155,38 @@ export class FieldComponent {
         return neighbors;
     }
 
+    public spawnEnemy() {
+        let spawnTile = this.spawnTile()
+
+        if (!spawnTile)
+            return
+
+        spawnTile.spawnEnemy()
+    }
+
+    /**
+     * hasAnyEnemy
+     */
+    public hasAnyEnemy(): boolean {
+        for (const tileRow of this.tiles) {
+            for (const tile of tileRow) {
+                if (tile.enemies.length > 0) {
+                    return true
+                }
+            }
+        }
+
+        return false
+    }
+
+
     private isOccupied(tile: TileComponent) {
         return tile.building != null
     }
 
-    public nextStep(currentPos: Vector2) {
-
-    }
-
     private debugEntities: Entity[] = []
 
-    private clearDebugField(){
+    private clearDebugField() {
         for (const e of this.debugEntities) {
             engine.removeEntity(e)
         }

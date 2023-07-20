@@ -41,8 +41,12 @@ export type DceEntity = {
     hide: () => void
 }
 
-export type WithGLTFShape = {
-    gLTFShape: GLTFShape
+export type WithCylinderShape = {
+    cylinderShape: CylinderShape
+}
+
+export type WithBoxShape = {
+    boxShape: BoxShape
 }
 
 export type WithEnemyComponent = {
@@ -53,16 +57,8 @@ export type WithFieldComponent = {
     fieldComponent: FieldComponent
 }
 
-export type WithBoxShape = {
-    boxShape: BoxShape
-}
-
 export type WithTileComponent = {
     tileComponent: TileComponent
-}
-
-export type WithCylinderShape = {
-    cylinderShape: CylinderShape
 }
 
 export type WithSphereShape = {
@@ -75,11 +71,14 @@ export type WithTurretComponent = {
 
 export type Enemy = DceScene & {
     exposed: {
-        PlaceHolder: DceEntity & WithGLTFShape & WithEnemyComponent,
+        Body: DceEntity & WithCylinderShape,
+        Healthtext: DceEntity,
+        PlaceHolder: DceEntity & WithEnemyComponent,
     }
 }
 export type MainScene = DceScene & {
     exposed: {
+        Tiles: DceEntity & WithFieldComponent,
     }
 }
 export type Tile = DceScene & {
@@ -109,6 +108,68 @@ export class SceneFactory {
             }
         }
 
+        const ent4_Body1 = new Entity("Body")
+        const ent4_Body1Transform = new Transform()
+        ent4_Body1Transform.position = new Vector3(0, 3.06289, 0)
+        ent4_Body1Transform.rotation = new Quaternion(0, 0, 0, 1)
+        ent4_Body1Transform.scale = new Vector3(1.5, 0.25, 1.25)
+        if("init" in ent4_Body1Transform && typeof ent4_Body1Transform.init === "function")
+        {
+            ent4_Body1Transform.init(ent4_Body1)
+        }
+        ent4_Body1.addComponent(ent4_Body1Transform)
+        const ent4_Body1CylinderShape = new CylinderShape()
+        if("init" in ent4_Body1CylinderShape && typeof ent4_Body1CylinderShape.init === "function")
+        {
+            ent4_Body1CylinderShape.init(ent4_Body1)
+        }
+        ent4_Body1.addComponent(ent4_Body1CylinderShape)
+
+        const ent4_BoxEntity1 = new Entity("Box Entity")
+        const ent4_BoxEntity1Transform = new Transform()
+        ent4_BoxEntity1Transform.position = new Vector3(0.726736, 0.2638061, 0.6231604)
+        ent4_BoxEntity1Transform.rotation = new Quaternion(0, 0, 0, 1)
+        ent4_BoxEntity1Transform.scale = new Vector3(1, 1, 0.25)
+        if("init" in ent4_BoxEntity1Transform && typeof ent4_BoxEntity1Transform.init === "function")
+        {
+            ent4_BoxEntity1Transform.init(ent4_BoxEntity1)
+        }
+        ent4_BoxEntity1.addComponent(ent4_BoxEntity1Transform)
+        const ent4_BoxEntity1BoxShape = new BoxShape()
+        if("init" in ent4_BoxEntity1BoxShape && typeof ent4_BoxEntity1BoxShape.init === "function")
+        {
+            ent4_BoxEntity1BoxShape.init(ent4_BoxEntity1)
+        }
+        ent4_BoxEntity1.addComponent(ent4_BoxEntity1BoxShape)
+
+        const ent4_BoxEntity2 = new Entity("Box Entity")
+        const ent4_BoxEntity2Transform = new Transform()
+        ent4_BoxEntity2Transform.position = new Vector3(0.7267358, 0.2638061, -0.623392)
+        ent4_BoxEntity2Transform.rotation = new Quaternion(0, 0, 0, 1)
+        ent4_BoxEntity2Transform.scale = new Vector3(1, 1, 0.25)
+        if("init" in ent4_BoxEntity2Transform && typeof ent4_BoxEntity2Transform.init === "function")
+        {
+            ent4_BoxEntity2Transform.init(ent4_BoxEntity2)
+        }
+        ent4_BoxEntity2.addComponent(ent4_BoxEntity2Transform)
+        const ent4_BoxEntity2BoxShape = new BoxShape()
+        if("init" in ent4_BoxEntity2BoxShape && typeof ent4_BoxEntity2BoxShape.init === "function")
+        {
+            ent4_BoxEntity2BoxShape.init(ent4_BoxEntity2)
+        }
+        ent4_BoxEntity2.addComponent(ent4_BoxEntity2BoxShape)
+
+        const ent4_Healthtext1 = new Entity("Health text")
+        const ent4_Healthtext1Transform = new Transform()
+        ent4_Healthtext1Transform.position = new Vector3(0, 5.5824, 0)
+        ent4_Healthtext1Transform.rotation = new Quaternion(0, 0, 0, 1)
+        ent4_Healthtext1Transform.scale = new Vector3(1, 1, 1)
+        if("init" in ent4_Healthtext1Transform && typeof ent4_Healthtext1Transform.init === "function")
+        {
+            ent4_Healthtext1Transform.init(ent4_Healthtext1)
+        }
+        ent4_Healthtext1.addComponent(ent4_Healthtext1Transform)
+
         const ent4_PlaceHolder1 = new Entity("PlaceHolder")
         const ent4_PlaceHolder1Transform = new Transform()
         ent4_PlaceHolder1Transform.position = new Vector3(0, 0, 0)
@@ -119,15 +180,6 @@ export class SceneFactory {
             ent4_PlaceHolder1Transform.init(ent4_PlaceHolder1)
         }
         ent4_PlaceHolder1.addComponent(ent4_PlaceHolder1Transform)
-        const ent4_PlaceHolder1GLTFShape = new GLTFShape("dcl-edit/build/builder_assets/models/Horizontal_Flying_Taxi_Available.glb")
-        ent4_PlaceHolder1GLTFShape.visible = true
-        ent4_PlaceHolder1GLTFShape.withCollisions = true
-        ent4_PlaceHolder1GLTFShape.isPointerBlocker = true
-        if("init" in ent4_PlaceHolder1GLTFShape && typeof ent4_PlaceHolder1GLTFShape.init === "function")
-        {
-            ent4_PlaceHolder1GLTFShape.init(ent4_PlaceHolder1)
-        }
-        ent4_PlaceHolder1.addComponent(ent4_PlaceHolder1GLTFShape)
         const ent4_PlaceHolder1EnemyComponent = new EnemyComponent()
         if("init" in ent4_PlaceHolder1EnemyComponent && typeof ent4_PlaceHolder1EnemyComponent.init === "function")
         {
@@ -135,6 +187,10 @@ export class SceneFactory {
         }
         ent4_PlaceHolder1.addComponent(ent4_PlaceHolder1EnemyComponent)
 
+        ent4_Body1.setParent(ent4_PlaceHolder1)
+        ent4_BoxEntity1.setParent(ent4_Body1)
+        ent4_BoxEntity2.setParent(ent4_Body1)
+        ent4_Healthtext1.setParent(ent4_PlaceHolder1)
         ent4_PlaceHolder1.setParent(rootEntity)
 
         engine.addEntity(rootEntity)
@@ -147,10 +203,22 @@ export class SceneFactory {
                 hide() { engine.removeEntity(this.entity) }
             },
             exposed: {
+                Body: {
+                    entity: ent4_Body1,
+                    transform: ent4_Body1Transform,
+                    cylinderShape: ent4_Body1CylinderShape,
+                    show() { engine.addEntity(this.entity) },
+                    hide() { engine.removeEntity(this.entity) }
+                },
+                Healthtext: {
+                    entity: ent4_Healthtext1,
+                    transform: ent4_Healthtext1Transform,
+                    show() { engine.addEntity(this.entity) },
+                    hide() { engine.removeEntity(this.entity) }
+                },
                 PlaceHolder: {
                     entity: ent4_PlaceHolder1,
                     transform: ent4_PlaceHolder1Transform,
-                    gLTFShape: ent4_PlaceHolder1GLTFShape,
                     enemyComponent: ent4_PlaceHolder1EnemyComponent,
                     show() { engine.addEntity(this.entity) },
                     hide() { engine.removeEntity(this.entity) }
@@ -207,6 +275,13 @@ export class SceneFactory {
                 hide() { engine.removeEntity(this.entity) }
             },
             exposed: {
+                Tiles: {
+                    entity: ent4_Tiles1,
+                    transform: ent4_Tiles1Transform,
+                    fieldComponent: ent4_Tiles1FieldComponent,
+                    show() { engine.addEntity(this.entity) },
+                    hide() { engine.removeEntity(this.entity) }
+                },
             },
 
             show() { this.sceneRoot.show() },
@@ -354,6 +429,9 @@ export class SceneFactory {
         }
         ent4_Turret1.addComponent(ent4_Turret1Transform)
         const ent4_Turret1TurretComponent = new TurretComponent()
+        ent4_Turret1TurretComponent.range = 5
+        ent4_Turret1TurretComponent.shotsPerSecond = 3
+        ent4_Turret1TurretComponent.damage = 10
         if("init" in ent4_Turret1TurretComponent && typeof ent4_Turret1TurretComponent.init === "function")
         {
             ent4_Turret1TurretComponent.init(ent4_Turret1)

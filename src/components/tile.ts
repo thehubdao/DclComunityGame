@@ -1,4 +1,6 @@
+import { CurrencyManager } from "src/currencyManager";
 import { SceneFactory } from "../../dcl-edit/build/scripts/scenes"
+import { EnemyComponent } from "./enemy";
 import { FieldComponent } from "./field"
 import { TurretComponent } from "./turret"
 
@@ -20,6 +22,8 @@ export class TileComponent {
     nextTileToGoal: TileComponent | null = null
 
     building: TurretComponent | null = null
+
+    enemies: EnemyComponent[] = []
 
     entity?: Entity;
 
@@ -43,6 +47,14 @@ export class TileComponent {
 
     }
 
+    addEnemy(enemy: EnemyComponent) {
+        this.enemies.push(enemy)
+    }
+
+    removeEnemy(enemy: EnemyComponent) {
+        this.enemies = this.enemies.filter(e => e != enemy)
+    }
+
     getGlobalPosition(): Vector3 {
         if (this.entity == null)
             return Vector3.Zero()
@@ -54,20 +66,32 @@ export class TileComponent {
         var enemyScene = SceneFactory.createEnemy()
         enemyScene.exposed.PlaceHolder.enemyComponent.tile = this;
         enemyScene.exposed.PlaceHolder.enemyComponent.setPos()
+
+        enemyScene.exposed.PlaceHolder.enemyComponent.bodyEntityDebug = enemyScene.exposed.Body.entity
+        enemyScene.exposed.PlaceHolder.enemyComponent.healthTextEntity = enemyScene.exposed.Healthtext.entity
     }
 
     addTurret() {
         log(`Add Turret`)
+        let turretCost = 50
+
+        if(CurrencyManager.instance.gold < turretCost){
+            return
+        }
+
+        CurrencyManager.instance.gold -= turretCost
+
         let turretScene = SceneFactory.createTurret()
         turretScene.sceneRoot.entity.setParent(this.entity!.getParent())
 
         turretScene.sceneRoot.transform.position = new Vector3(0.5, 0, 0.5)
 
-        let turretComp = turretScene.exposed.Turret.turretComponent;
+        let turretComp = turretScene.exposed.Turret.turretComponent
 
-        this.building = turretComp;
+        this.building = turretComp
+        turretComp.tile = this
 
-        this.field?.bakePathFinding(this.field.tiles[3][6])
+        this.field?.bakePathFinding()
     }
 
     removeTurret() {
@@ -77,6 +101,12 @@ export class TileComponent {
 
         this.building = null
 
-        this.field?.bakePathFinding(this.field.tiles[3][6])
+        this.field?.bakePathFinding()
+    }
+
+    isDestination(): boolean {
+        let destination = this.field?.destination ?? new Vector2(-1, -1)
+
+        return destination.equals(this.pos)
     }
 }

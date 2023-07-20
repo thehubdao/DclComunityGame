@@ -1,8 +1,8 @@
 {
-  "customName": "Tiles",
-  "guid": "065a1ff0-91d0-4e00-b390-a6f411c1f8b1",
-  "parentGuid": null,
-  "hierarchyOrder": 21.0,
+  "customName": "Body",
+  "guid": "06624c96-6c5d-4d24-ba3d-8b82dca01582",
+  "parentGuid": "74838f4c-f3c8-bca5-892b-dd677070abae",
+  "hierarchyOrder": 0.0,
   "isExposed": true,
   "components": [
     {
@@ -13,9 +13,9 @@
           "name": "position",
           "type": "Vector3",
           "fixedValue": {
-            "x": 3.0,
-            "y": 0.0,
-            "z": 2.0
+            "x": 0.0,
+            "y": 3.06288958,
+            "z": 0.0
           }
         },
         {
@@ -32,28 +32,17 @@
           "name": "scale",
           "type": "Vector3",
           "fixedValue": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0
+            "x": 1.5,
+            "y": 0.25,
+            "z": 1.25
           }
         }
       ]
     },
     {
-      "nameInCode": "FieldComponent",
-      "nameOfSlot": "FieldComponent",
-      "properties": [
-        {
-          "name": "height",
-          "type": "Float",
-          "fixedValue": 8.0
-        },
-        {
-          "name": "width",
-          "type": "Float",
-          "fixedValue": 10.0
-        }
-      ]
+      "nameInCode": "CylinderShape",
+      "nameOfSlot": "Shape",
+      "properties": []
     }
   ],
   "dclEditVersionNumber": "1.0.4"

@@ -1,9 +1,9 @@
 {
-  "customName": "Tiles",
-  "guid": "065a1ff0-91d0-4e00-b390-a6f411c1f8b1",
-  "parentGuid": null,
-  "hierarchyOrder": 21.0,
-  "isExposed": true,
+  "customName": "Box Entity",
+  "guid": "8252119b-8a35-4242-b39c-b8d71b8cdc2f",
+  "parentGuid": "06624c96-6c5d-4d24-ba3d-8b82dca01582",
+  "hierarchyOrder": 0.0,
+  "isExposed": false,
   "components": [
     {
       "nameInCode": "Transform",
@@ -13,9 +13,9 @@
           "name": "position",
           "type": "Vector3",
           "fixedValue": {
-            "x": 3.0,
-            "y": 0.0,
-            "z": 2.0
+            "x": 0.726736,
+            "y": 0.263806075,
+            "z": 0.6231604
           }
         },
         {
@@ -34,26 +34,15 @@
           "fixedValue": {
             "x": 1.0,
             "y": 1.0,
-            "z": 1.0
+            "z": 0.25
           }
         }
       ]
     },
     {
-      "nameInCode": "FieldComponent",
-      "nameOfSlot": "FieldComponent",
-      "properties": [
-        {
-          "name": "height",
-          "type": "Float",
-          "fixedValue": 8.0
-        },
-        {
-          "name": "width",
-          "type": "Float",
-          "fixedValue": 10.0
-        }
-      ]
+      "nameInCode": "BoxShape",
+      "nameOfSlot": "Shape",
+      "properties": []
     }
   ],
   "dclEditVersionNumber": "1.0.4"
