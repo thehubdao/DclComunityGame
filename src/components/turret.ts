@@ -34,6 +34,7 @@
 import { Tile } from "dcl-edit/build/scripts/scenes";
 import { EnemyComponent } from "./enemy";
 import { TileComponent } from "./tile";
+import { SpawnManager } from "src/spawnManager";
 
 
 @Component("TurretComponent")
@@ -46,6 +47,7 @@ export class TurretComponent {
     // references
     entity?: Entity
     tile?: TileComponent
+    muzzleTransform?: Transform
 
     // values
     timeToNextShot: number = 0
@@ -86,6 +88,26 @@ export class TurretComponent {
 
     timeBetweenShots(): number {
         return 1 / this.shotsPerSecond
+    }
+
+    getMuzzleGlobalPosition(): Vector3 {
+        let turrentGlobalPos = this.tile?.getGlobalPosition()
+
+        let turretRotation = this.entity?.getComponent(Transform).rotation ?? Quaternion.Identity
+
+        let localMuzzlePos = this.muzzleTransform?.position.clone() ?? Vector3.Zero()
+        let rotatedMuzzlePos = localMuzzlePos.rotate(turretRotation)
+
+        if (!turrentGlobalPos)
+            return Vector3.Zero()
+
+        let globlaPos = turrentGlobalPos.add(rotatedMuzzlePos)
+
+        return globlaPos
+    }
+
+    getMuzzleRotation(): Quaternion {
+        return this.entity?.getComponent(Transform).rotation.clone() ?? Quaternion.Identity
     }
 }
 
@@ -134,19 +156,36 @@ class TurretSystem implements ISystem {
                 // debug
                 //turret.targetEnemy?.bodyEntityDebug?.addComponentOrReplace(redMat)
 
+                if (turret.targetEnemy) {
+                    let turrentTransform = turret.entity?.getComponent(Transform)
+                    let lookingTarget = turret.targetEnemy.entity?.getComponent(Transform).position
+    
+                    if (lookingTarget) {
+                        turrentTransform?.lookAt(lookingTarget)
+                    }
+                }
+
                 // Apply damage
                 if (turret.targetEnemy) {
                     turret.targetEnemy.health -= turret.damage
                     turret.timeToNextShot = turret.timeBetweenShots()
 
-                    let turrentTransform = turret.entity?.getComponent(Transform)
-                    let lookingTarget = turret.targetEnemy.entity?.getComponent(Transform).position
-                    if(lookingTarget){
-                        turrentTransform?.lookAt(lookingTarget)
-                    }
+                    let muzzlePosition = turret.getMuzzleGlobalPosition()
+                    let targetPosition = turret.targetEnemy.entity?.getComponent(Transform).position ?? Vector3.Zero()
+
+                    SpawnManager.spawnBullet(muzzlePosition, turret.getMuzzleRotation(), Vector3.Distance(muzzlePosition, targetPosition))
                 }
             } else {
                 turret.timeToNextShot -= dt
+            }
+
+            if (turret.targetEnemy) {
+                let turrentTransform = turret.entity?.getComponent(Transform)
+                let lookingTarget = turret.targetEnemy.entity?.getComponent(Transform).position
+
+                if (lookingTarget) {
+                    turrentTransform?.lookAt(lookingTarget)
+                }
             }
         }
     }

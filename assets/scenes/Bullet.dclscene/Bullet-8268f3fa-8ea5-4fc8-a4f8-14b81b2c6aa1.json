@@ -1,0 +1,49 @@
+{
+  "customName": "Bullet",
+  "guid": "8268f3fa-8ea5-4fc8-a4f8-14b81b2c6aa1",
+  "parentGuid": null,
+  "hierarchyOrder": 1.0,
+  "isExposed": true,
+  "components": [
+    {
+      "nameInCode": "Transform",
+      "nameOfSlot": "Transform",
+      "properties": [
+        {
+          "name": "position",
+          "type": "Vector3",
+          "fixedValue": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        {
+          "name": "rotation",
+          "type": "Quaternion",
+          "fixedValue": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          }
+        },
+        {
+          "name": "scale",
+          "type": "Vector3",
+          "fixedValue": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "nameInCode": "BulletComponent",
+      "nameOfSlot": "BulletComponent",
+      "properties": []
+    }
+  ],
+  "dclEditVersionNumber": "1.0.4"
+}

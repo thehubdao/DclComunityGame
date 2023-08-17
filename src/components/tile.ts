@@ -90,6 +90,8 @@ export class TileComponent {
         this.building = turretComp
         turretComp.tile = this
 
+        turretComp.muzzleTransform = turretScene.exposed.Muzzle.transform
+
         this.field?.bakePathFinding()
     }
 

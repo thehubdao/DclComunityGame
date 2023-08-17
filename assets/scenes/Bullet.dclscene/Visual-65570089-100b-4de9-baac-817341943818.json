@@ -1,0 +1,49 @@
+{
+  "customName": "Visual",
+  "guid": "65570089-100b-4de9-baac-817341943818",
+  "parentGuid": "8268f3fa-8ea5-4fc8-a4f8-14b81b2c6aa1",
+  "hierarchyOrder": 0.0,
+  "isExposed": false,
+  "components": [
+    {
+      "nameInCode": "Transform",
+      "nameOfSlot": "Transform",
+      "properties": [
+        {
+          "name": "position",
+          "type": "Vector3",
+          "fixedValue": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        {
+          "name": "rotation",
+          "type": "Quaternion",
+          "fixedValue": {
+            "x": 0.707106769,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 0.707106769
+          }
+        },
+        {
+          "name": "scale",
+          "type": "Vector3",
+          "fixedValue": {
+            "x": 0.02,
+            "y": 0.2,
+            "z": 0.02
+          }
+        }
+      ]
+    },
+    {
+      "nameInCode": "CylinderShape",
+      "nameOfSlot": "Shape",
+      "properties": []
+    }
+  ],
+  "dclEditVersionNumber": "1.0.4"
+}
