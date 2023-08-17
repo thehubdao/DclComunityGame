@@ -82,9 +82,7 @@ export class TileComponent {
         CurrencyManager.instance.gold -= turretCost
 
         let turretScene = SceneFactory.createTurret()
-        turretScene.sceneRoot.entity.setParent(this.entity!.getParent())
-
-        turretScene.sceneRoot.transform.position = new Vector3(0.5, 0, 0.5)
+        turretScene.exposed.Turret.transform.position = this.getGlobalPosition()
 
         let turretComp = turretScene.exposed.Turret.turretComponent
 

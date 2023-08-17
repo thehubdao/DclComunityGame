@@ -36,8 +36,8 @@ export class EnemyComponent {
     timerUntilNextStep: number = 1
 
     // Health stuff
-    maxHealth: number = 20
-    private health_internal: number = 20
+    maxHealth: number = 100
+    private health_internal: number = 100
 
     public set health(v: number) {
         this.health_internal = v

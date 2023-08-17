@@ -138,6 +138,12 @@ class TurretSystem implements ISystem {
                 if (turret.targetEnemy) {
                     turret.targetEnemy.health -= turret.damage
                     turret.timeToNextShot = turret.timeBetweenShots()
+
+                    let turrentTransform = turret.entity?.getComponent(Transform)
+                    let lookingTarget = turret.targetEnemy.entity?.getComponent(Transform).position
+                    if(lookingTarget){
+                        turrentTransform?.lookAt(lookingTarget)
+                    }
                 }
             } else {
                 turret.timeToNextShot -= dt

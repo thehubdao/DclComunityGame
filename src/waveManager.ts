@@ -6,7 +6,7 @@ export class WaveManager {
 
     public field?: FieldComponent
 
-    public spawnAmout: number = 5
+    public spawnAmout: number = 100
     public spawnDelay: number = 3
 
     public spawnAmountLeft?: number
