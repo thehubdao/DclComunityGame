@@ -33,7 +33,9 @@ export class EnemyComponent {
 
     entity?: Entity
 
-    timerUntilNextStep: number = 1
+    timeBetweenWaypoints: number = 1
+    timerUntilNextWaypoint: number = 1
+
 
     // Health stuff
     maxHealth: number = 100
@@ -75,16 +77,28 @@ export class EnemyComponent {
         if (this.tile == null)
             return
 
-        this.entity!.getComponent(Transform).position = this.tile.getGlobalPosition()
+        let currentTilePos = this.tile.getGlobalPosition()
+        let nextTilePos = this.tile.nextTileToGoal?.getGlobalPosition() ?? Vector3.Zero()
+        let normalizedTime = (this.timeBetweenWaypoints - this.timerUntilNextWaypoint) / this.timeBetweenWaypoints
+
+        let newPosition = Vector3.Lerp(currentTilePos, nextTilePos, normalizedTime)
+
+        this.entity!.getComponent(Transform).position = newPosition
     }
 
-    public doStep() {
-        this.tile = this.tile?.nextTileToGoal ?? null
+    public doTick(dt: number) {
+        if (this.timerUntilNextWaypoint <= 0) {
+            this.tile = this.tile?.nextTileToGoal ?? null
 
-        if (this.tile?.isDestination()) {
-            this.removeEnemy()
-            log("You Lost")
+            if (this.tile?.isDestination()) {
+                this.removeEnemy()
+                log("You Lost")
+            }
+
+            this.timerUntilNextWaypoint = this.timeBetweenWaypoints
         }
+
+        this.timerUntilNextWaypoint -= dt
 
         this.setPos()
     }
@@ -118,13 +132,9 @@ class EnemySystem implements ISystem {
 
         for (const entity of engine.getComponentGroup(EnemyComponent).entities) {
             const enemy = entity.getComponent(EnemyComponent)
-            enemy.timerUntilNextStep -= dt;
 
-            if (enemy.timerUntilNextStep <= 0) {
-                enemy.doStep()
+            enemy.doTick(dt)
 
-                enemy.timerUntilNextStep = 1
-            }
 
             // update health text
             enemy.showHealth()
