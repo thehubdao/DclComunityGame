@@ -66,6 +66,7 @@ export class TileComponent {
         var enemyScene = SceneFactory.createEnemy()
         enemyScene.exposed.PlaceHolder.enemyComponent.tile = this;
         enemyScene.exposed.PlaceHolder.enemyComponent.setPos()
+        enemyScene.exposed.PlaceHolder.enemyComponent.setRot()
 
         enemyScene.exposed.PlaceHolder.enemyComponent.bodyEntityDebug = enemyScene.exposed.Body.entity
         enemyScene.exposed.PlaceHolder.enemyComponent.healthTextEntity = enemyScene.exposed.Healthtext.entity

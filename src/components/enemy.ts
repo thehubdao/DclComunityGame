@@ -86,6 +86,15 @@ export class EnemyComponent {
         this.entity!.getComponent(Transform).position = newPosition
     }
 
+    public setRot() {
+        if (this.tile == null)
+            return
+
+        let nextTilePos = this.tile.nextTileToGoal?.getGlobalPosition() ?? Vector3.Zero()
+        let enemyTransform = this.entity!.getComponent(Transform)
+        enemyTransform.lookAt(nextTilePos)
+    }
+
     public doTick(dt: number) {
         if (this.timerUntilNextWaypoint <= 0) {
             this.tile = this.tile?.nextTileToGoal ?? null
@@ -94,6 +103,8 @@ export class EnemyComponent {
                 this.removeEnemy()
                 log("You Lost")
             }
+
+            this.setRot()
 
             this.timerUntilNextWaypoint = this.timeBetweenWaypoints
         }
