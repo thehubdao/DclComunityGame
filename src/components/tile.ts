@@ -3,6 +3,8 @@ import { SceneFactory } from "../../dcl-edit/build/scripts/scenes"
 import { EnemyComponent } from "./enemy";
 import { FieldComponent } from "./field"
 import { TurretComponent } from "./turret"
+import { GameManager, GameState } from "src/gameManager";
+import { TurretManager } from "src/turrentManager";
 
 
 
@@ -74,9 +76,14 @@ export class TileComponent {
 
     addTurret() {
         log(`Add Turret`)
+
+        if (GameManager.instance!.getState() != GameState.Build) {
+            return
+        }
+
         let turretCost = 50
 
-        if(CurrencyManager.instance.gold < turretCost){
+        if (CurrencyManager.instance.gold < turretCost) {
             return
         }
 
@@ -93,16 +100,23 @@ export class TileComponent {
         turretComp.muzzleTransform = turretScene.exposed.Muzzle.transform
 
         this.field?.bakePathFinding()
+
+        TurretManager.instance.registerTurret(turretComp)
     }
 
     removeTurret() {
         log(`Remove Turret`)
-        let e = this.building?.entity
-        if (e) engine.removeEntity(e)
+
+        let turretComp = this.building
+        if (turretComp) {
+            engine.removeEntity(turretComp.entity!)
+            TurretManager.instance.unregisterTurret(this.building!)
+        }
 
         this.building = null
 
         this.field?.bakePathFinding()
+
     }
 
     isDestination(): boolean {

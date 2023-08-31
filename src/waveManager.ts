@@ -29,6 +29,10 @@ export class WaveManager {
         this.spawnAmountLeft = this.spawnAmout
         this.spawnDelayLeft = this.spawnDelay
     }
+
+    public stopWave(){
+        this.spawnAmountLeft = undefined
+    }
 }
 
 class WaveManagerSystem implements ISystem {

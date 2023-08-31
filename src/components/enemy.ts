@@ -1,5 +1,6 @@
 import { CurrencyManager } from "src/currencyManager";
 import { TileComponent } from "./tile";
+import { GameManager, GameState } from "src/gameManager";
 
 /*
 #DCECOMP
@@ -44,9 +45,7 @@ export class EnemyComponent {
     public set health(v: number) {
         this.health_internal = v
         if (this.health_internal <= 0) {
-            // DIE // TODO: split up dying and reaching goal
             CurrencyManager.instance.gold += 30
-
             this.removeEnemy()
         }
     }
@@ -96,12 +95,18 @@ export class EnemyComponent {
     }
 
     public doTick(dt: number) {
+        if (GameManager.instance!.getState() != GameState.Fight) {
+            this.removeEnemy()
+            return
+        }
+
         if (this.timerUntilNextWaypoint <= 0) {
             this.tile = this.tile?.nextTileToGoal ?? null
 
             if (this.tile?.isDestination()) {
                 this.removeEnemy()
                 log("You Lost")
+                GameManager.instance!.setState(GameState.GameOver)
             }
 
             this.setRot()

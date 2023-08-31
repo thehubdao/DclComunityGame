@@ -1,7 +1,8 @@
 export class CurrencyManager {
     public static instance = new CurrencyManager;
 
-    private gold_internal: number = 100;
+    private initialGold: number = 100
+    private gold_internal: number = this.initialGold;
 
     private uiText?: UIText = undefined;
 
@@ -14,6 +15,10 @@ export class CurrencyManager {
         this.gold_internal = v;
 
         this.updateUi()
+    }
+
+    public resetGold(){
+        this.gold = this.initialGold
     }
 
     private updateUi() {
