@@ -1,8 +1,8 @@
 {
-  "customName": "Body",
-  "guid": "06624c96-6c5d-4d24-ba3d-8b82dca01582",
-  "parentGuid": "74838f4c-f3c8-bca5-892b-dd677070abae",
-  "hierarchyOrder": 0.0,
+  "customName": "Build Menu",
+  "guid": "0f87bef5-d396-443d-8331-e17550305c4d",
+  "parentGuid": null,
+  "hierarchyOrder": 24.0,
   "isExposed": true,
   "components": [
     {
@@ -14,7 +14,7 @@
           "type": "Vector3",
           "fixedValue": {
             "x": 0.0,
-            "y": 3.06288958,
+            "y": 0.0,
             "z": 0.0
           }
         },
@@ -23,26 +23,32 @@
           "type": "Quaternion",
           "fixedValue": {
             "x": 0.0,
-            "y": -0.707106769,
+            "y": 0.0,
             "z": 0.0,
-            "w": 0.707106769
+            "w": 1.0
           }
         },
         {
           "name": "scale",
           "type": "Vector3",
           "fixedValue": {
-            "x": 1.5,
-            "y": 0.25,
-            "z": 1.25
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
           }
         }
       ]
     },
     {
-      "nameInCode": "CylinderShape",
-      "nameOfSlot": "Shape",
-      "properties": []
+      "nameInCode": "Scene",
+      "nameOfSlot": "Scene",
+      "properties": [
+        {
+          "name": "scene",
+          "type": "Asset",
+          "fixedValue": "585b2ff2-d33e-4153-849b-20640f18f4ad"
+        }
+      ]
     }
   ],
   "dclEditVersionNumber": "1.0.5"
