@@ -39,13 +39,13 @@ export class EnemyComponent {
 
 
     // Health stuff
-    maxHealth: number = 100
-    private health_internal: number = 100
+    maxHealth: number = 110
+    private health_internal: number = 110
 
     public set health(v: number) {
         this.health_internal = v
         if (this.health_internal <= 0) {
-            CurrencyManager.instance.gold += 30
+            CurrencyManager.instance.gold += 10
             this.removeEnemy()
         }
     }

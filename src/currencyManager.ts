@@ -43,5 +43,7 @@ export class CurrencyManager {
         this.uiText.positionY = -40
         this.uiText.hTextAlign = "right"
         this.uiText.vTextAlign = "bottom"
+
+        this.updateUi()
     }
 }

@@ -27,6 +27,8 @@ export class GameManager {
 
     private gameState: GameState = GameState.Menu
 
+    private level: number = 0
+
     public getState(): GameState {
         return this.gameState
     }
@@ -81,7 +83,10 @@ export class GameManager {
 
     private FightStateEntered() {
         log("Endered Fight State")
-        WaveManager.instance.startWave()
+
+        this.level++
+
+        WaveManager.instance.startWave(this.level)
     }
 
     private GameOverStateEntered() {
@@ -90,6 +95,10 @@ export class GameManager {
 
         TurretManager.instance.removeAllTurrets()
 
+        WaveManager.instance.field?.cleanupField()
+
+        this.level = 0
+
         this.setState(GameState.Menu)
     }
 
@@ -97,6 +106,7 @@ export class GameManager {
     private MenuStateExit() {
         log("Exit Menu State")
         this.menuScene.hide()
+        WaveManager.instance.field?.setupField(5,4)
     }
 
     private BuildStateExit() {

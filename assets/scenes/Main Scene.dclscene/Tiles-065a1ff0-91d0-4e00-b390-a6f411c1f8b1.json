@@ -42,18 +42,7 @@
     {
       "nameInCode": "FieldComponent",
       "nameOfSlot": "FieldComponent",
-      "properties": [
-        {
-          "name": "height",
-          "type": "Float",
-          "fixedValue": 8.0
-        },
-        {
-          "name": "width",
-          "type": "Float",
-          "fixedValue": 10.0
-        }
-      ]
+      "properties": []
     }
   ],
   "dclEditVersionNumber": "1.0.5"

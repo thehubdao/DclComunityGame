@@ -1,4 +1,5 @@
 import { FieldComponent } from "./components/field"
+import { GameManager, GameState } from "./gameManager"
 
 export class WaveManager {
     public static instance = new WaveManager
@@ -6,8 +7,18 @@ export class WaveManager {
 
     public field?: FieldComponent
 
-    public spawnAmout: number = 100
-    public spawnDelay: number = 3
+    public spawnAmount() : number {
+        return 4 + this.level
+    }
+    
+    private spawnDelayScalar = 4
+    private spawnDelayAmount = 1.5
+
+    public spawnDelay() : number {
+        return this.spawnDelayScalar * (Math.pow(2, -(this.level/this.spawnDelayAmount)))
+    }
+
+    private level = 0
 
     public spawnAmountLeft?: number
     public spawnDelayLeft: number = 0
@@ -25,9 +36,13 @@ export class WaveManager {
     /**
      * startWave
      */
-    public startWave() {
-        this.spawnAmountLeft = this.spawnAmout
-        this.spawnDelayLeft = this.spawnDelay
+    public startWave(level:number) {
+        this.level = level
+
+        this.spawnAmountLeft = this.spawnAmount()
+        this.spawnDelayLeft = this.spawnDelay()
+
+        log("level: "+this.level+" spawnAmount: "+ this.spawnAmount() + " spawnDelay: "+this.spawnDelay())
     }
 
     public stopWave(){
@@ -45,13 +60,14 @@ class WaveManagerSystem implements ISystem {
                     WaveManager.instance.field.spawnEnemy()
 
                     WaveManager.instance.spawnAmountLeft--
-                    WaveManager.instance.spawnDelayLeft += WaveManager.instance.spawnDelay
+                    WaveManager.instance.spawnDelayLeft += WaveManager.instance.spawnDelay()
                 }
             } else {
                 if (!WaveManager.instance.field.hasAnyEnemy()) {
                     // wave is won
                     log("wave is won")
                     WaveManager.instance.spawnAmountLeft = undefined
+                    GameManager.instance?.setState(GameState.Build)
                 }
             }
         }

@@ -3,24 +3,7 @@
 /*
 #DCECOMP
 {
-    "class": "TurretComponent",
-    "properties": [
-        {
-            "name": "range",
-            "type": "number",
-            "default": 5
-        },
-        {
-            "name": "shotsPerSecond",
-            "type": "number",
-            "default": 3
-        },
-        {
-            "name": "damage",
-            "type": "number",
-            "default": 10
-        }
-    ]
+    "class": "TurretComponent"
 }
 */
 
@@ -41,8 +24,8 @@ import { SpawnManager } from "src/spawnManager";
 export class TurretComponent {
     // properties
     range: number = 5
-    shotsPerSecond: number = 3
-    damage: number = 10
+    shotsPerSecond: number = 5
+    damage: number = 5 
 
     // references
     entity?: Entity

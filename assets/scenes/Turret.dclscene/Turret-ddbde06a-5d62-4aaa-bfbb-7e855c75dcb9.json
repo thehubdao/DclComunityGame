@@ -42,23 +42,7 @@
     {
       "nameInCode": "TurretComponent",
       "nameOfSlot": "TurretComponent",
-      "properties": [
-        {
-          "name": "range",
-          "type": "Float",
-          "fixedValue": 5.0
-        },
-        {
-          "name": "shotsPerSecond",
-          "type": "Float",
-          "fixedValue": 3.0
-        },
-        {
-          "name": "damage",
-          "type": "Float",
-          "fixedValue": 10.0
-        }
-      ]
+      "properties": []
     }
   ],
   "dclEditVersionNumber": "1.0.5"

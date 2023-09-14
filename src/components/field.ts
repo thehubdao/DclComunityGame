@@ -6,19 +6,7 @@ import { SceneFactory } from "dcl-edit/build/scripts/scenes"
 /*
 #DCECOMP
 {
-    "class": "FieldComponent",
-    "properties": [
-        {
-            "name": "height",
-            "type": "number",
-            "default": 5
-        },
-        {
-            "name": "width",
-            "type": "number",
-            "default": 5
-        }
-    ]
+    "class": "FieldComponent"
 }
 */
 
@@ -36,7 +24,15 @@ export class FieldComponent {
 
     init(entity: Entity) {
         this.entity = entity
-        log("init field 2")
+
+        // put self into wave manager
+        WaveManager.instance.field = this
+    }
+
+    public setupField(width: number, height: number){
+        this.width = width
+        this.height = height
+
         for (let i = 0; i < this.width; i++) {
             this.tiles[i] = []
             for (let j = 0; j < this.height; j++) {
@@ -48,7 +44,7 @@ export class FieldComponent {
 
                 tileComponent.field = this
 
-                t.sceneRoot.entity.setParent(entity)
+                t.sceneRoot.entity.setParent(this.entity)
                 t.sceneRoot.transform.position = new Vector3(i, 0, j);
 
                 this.tiles[i].push(tileComponent)
@@ -57,11 +53,22 @@ export class FieldComponent {
 
         this.bakePathFinding()
 
-        // put self into wave manager
-        WaveManager.instance.field = this
-
         // set spawnpoint
         this.spawnPoint = new Vector2(this.width - 1, this.height - 1)
+    }
+
+    public cleanupField(){
+        for (let i = 0; i < this.width; i++) {
+            for (let j = 0; j < this.height; j++) {
+                let tile = this.tiles[i][j]
+                let tileScene = tile.entity?.getParent()
+                if(tileScene){
+                    engine.removeEntity(tileScene)
+                }
+            }
+        }
+
+        this.tiles = []
     }
 
     // get spawn tile
@@ -111,9 +118,7 @@ export class FieldComponent {
             }
         }
 
-        log(this.tiles[5][6].nextTileToGoal?.pos)
-
-        this.debugField()
+        //this.debugField()
     }
 
     private resetFlowField() {
