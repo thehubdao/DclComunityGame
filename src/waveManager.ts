@@ -15,10 +15,10 @@ export class WaveManager {
     private spawnDelayAmount = 1.5
 
     public spawnDelay() : number {
-        return this.spawnDelayScalar * (Math.pow(2, -(this.level/this.spawnDelayAmount)))
+        return 1 / (this.level/2) // this.spawnDelayScalar * (Math.pow(2, -(this.level/this.spawnDelayAmount)))
     }
 
-    private level = 0
+    public level = 0
 
     public spawnAmountLeft?: number
     public spawnDelayLeft: number = 0
@@ -57,7 +57,7 @@ class WaveManagerSystem implements ISystem {
                 WaveManager.instance.spawnDelayLeft -= dt
                 if (WaveManager.instance.spawnDelayLeft <= 0) {
                     // spawn
-                    WaveManager.instance.field.spawnEnemy()
+                    WaveManager.instance.field.spawnEnemy(WaveManager.instance.level)
 
                     WaveManager.instance.spawnAmountLeft--
                     WaveManager.instance.spawnDelayLeft += WaveManager.instance.spawnDelay()

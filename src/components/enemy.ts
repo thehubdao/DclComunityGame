@@ -39,8 +39,8 @@ export class EnemyComponent {
 
 
     // Health stuff
-    maxHealth: number = 110
-    private health_internal: number = 110
+    maxHealth: number = 60
+    private health_internal: number = 60
 
     public set health(v: number) {
         this.health_internal = v
@@ -50,19 +50,21 @@ export class EnemyComponent {
         }
     }
 
+    public get health(): number {
+        return this.health_internal
+    }
+
+    setLevel(level: number){
+        this.maxHealth = 60 + (level * level * 3)
+        this.timeBetweenWaypoints = 1 / (1+(level/10))
+    }
+
     private removeEnemy() {
         if (this.entity) {
             engine.removeEntity(this.entity)
             this.tile_internal?.removeEnemy(this)
         }
     }
-
-
-    public get health(): number {
-        return this.health_internal
-    }
-
-
 
     healthTextEntity?: Entity;
     healthTextShape?: TextShape;

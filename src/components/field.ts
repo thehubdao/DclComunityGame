@@ -160,13 +160,13 @@ export class FieldComponent {
         return neighbors;
     }
 
-    public spawnEnemy() {
+    public spawnEnemy(level: number) {
         let spawnTile = this.spawnTile()
 
         if (!spawnTile)
             return
 
-        spawnTile.spawnEnemy()
+        spawnTile.spawnEnemy(level)
     }
 
     /**

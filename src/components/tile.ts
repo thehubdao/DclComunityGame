@@ -41,10 +41,6 @@ export class TileComponent {
                     this.removeTurret()
                 }
             }
-
-            if (event.buttonId == 1) {
-                this.spawnEnemy()
-            }
         }))
 
     }
@@ -64,11 +60,13 @@ export class TileComponent {
         return this.field?.entity?.getComponent(Transform).position.add(new Vector3(this.pos.x + 0.5, 0, this.pos.y + 0.5)) ?? Vector3.Zero()
     }
 
-    spawnEnemy() {
+    spawnEnemy(level:number) {
         var enemyScene = SceneFactory.createEnemy()
         enemyScene.exposed.PlaceHolder.enemyComponent.tile = this;
         enemyScene.exposed.PlaceHolder.enemyComponent.setPos()
         enemyScene.exposed.PlaceHolder.enemyComponent.setRot()
+
+        enemyScene.exposed.PlaceHolder.enemyComponent.setLevel(level)
 
         enemyScene.exposed.PlaceHolder.enemyComponent.bodyEntityDebug = enemyScene.exposed.Body.entity
         enemyScene.exposed.PlaceHolder.enemyComponent.healthTextEntity = enemyScene.exposed.Healthtext.entity
@@ -96,8 +94,13 @@ export class TileComponent {
 
         this.building = turretComp
         turretComp.tile = this
-
+        
         turretComp.muzzleTransform = turretScene.exposed.Muzzle.transform
+
+        turretComp.damageButtonEntity = turretScene.exposed.UpgradeDamage.entity
+        turretComp.rangeButtonEntity = turretScene.exposed.UpgradeRange.entity
+
+        turretComp.lateInit()
 
         this.field?.bakePathFinding()
 

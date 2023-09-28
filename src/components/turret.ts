@@ -18,12 +18,13 @@ import { Tile } from "dcl-edit/build/scripts/scenes";
 import { EnemyComponent } from "./enemy";
 import { TileComponent } from "./tile";
 import { SpawnManager } from "src/spawnManager";
+import { CurrencyManager } from "src/currencyManager";
 
 
 @Component("TurretComponent")
 export class TurretComponent {
     // properties
-    range: number = 5
+    range: number = 3
     shotsPerSecond: number = 5
     damage: number = 5 
 
@@ -31,14 +32,35 @@ export class TurretComponent {
     entity?: Entity
     tile?: TileComponent
     muzzleTransform?: Transform
+    damageButtonEntity?: Entity
+    rangeButtonEntity?: Entity
+
+    // texts
+    damageLevelText?: TextShape
+    rangeLevelText?: TextShape
 
     // values
+    damageLevel: number = 1
+    rangeLevel: number = 1
+
     timeToNextShot: number = 0
 
 
     init(entity: Entity) {
         this.entity = entity
         TurretSystem.require()
+    }
+
+    lateInit(){
+        this.damageButtonEntity?.addComponent(new OnPointerDown(()=>{
+            this.upgradeDamage()
+        }))
+
+        this.rangeButtonEntity?.addComponent(new OnPointerDown(()=>{
+            this.upgradeRange()
+        }))
+
+        this.updateText()
     }
 
     targetEnemy: EnemyComponent | null = null
@@ -67,6 +89,62 @@ export class TurretComponent {
         const tilesInRange = potentialTiles.filter(t => Vector2.Distance(t.pos, pos) <= this.range)
 
         return tilesInRange
+    }
+
+    upgradeRange(){
+        var cost = 20 + 20 * this.rangeLevel
+
+        if(CurrencyManager.instance.gold >= cost){
+            CurrencyManager.instance.gold -= cost
+            this.range += 0.5
+
+            this.rangeLevel++
+        }
+
+        this.updateText()
+    }
+
+    upgradeDamage(){
+        var cost = 20 + 20 * this.damageLevel
+
+        if(CurrencyManager.instance.gold >= cost){
+            CurrencyManager.instance.gold -= cost
+            this.damage += 1
+            this.shotsPerSecond += 1
+
+            this.damageLevel++
+        }
+
+        this.updateText()
+    }
+
+    updateText(){
+        if(!this.damageLevelText){
+            var e = new Entity
+            var ts = new TextShape
+            ts.billboard = true
+            ts.outlineColor = Color3.Black()
+            ts.outlineWidth = .2
+            this.damageLevelText = ts
+            e.addComponent(ts)
+            e.addComponent(new Transform({position:new Vector3(0,1,0)}))
+            e.setParent(this.damageButtonEntity!)
+        }
+
+        if(!this.rangeLevelText){
+            var e = new Entity
+            var ts = new TextShape
+            ts.billboard = true
+            ts.outlineColor = Color3.Black()
+            ts.outlineWidth = .2
+            this.rangeLevelText = ts
+            e.addComponent(ts)
+            e.addComponent(new Transform({position:new Vector3(0,1,0)}))
+            e.setParent(this.rangeButtonEntity!)
+        }
+
+        this.damageLevelText.value = "D:"+this.damageLevel
+        this.rangeLevelText.value = "R:"+this.rangeLevel
     }
 
     timeBetweenShots(): number {
