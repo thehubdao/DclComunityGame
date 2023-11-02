@@ -3,6 +3,7 @@ import { WaveManager } from "./waveManager"
 import { CurrencyManager } from "./currencyManager"
 import { TurretComponent } from "./components/turret"
 import { TurretManager } from "./turrentManager"
+import { PermanentUpgradeManager } from "./permanent_upgrade_manager"
 
 export enum GameState {
     Menu,
@@ -96,6 +97,8 @@ export class GameManager {
         TurretManager.instance.removeAllTurrets()
 
         WaveManager.instance.field?.cleanupField()
+
+        PermanentUpgradeManager.diamonds += this.level;
 
         this.level = 0
 

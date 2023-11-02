@@ -19,6 +19,7 @@ import { EnemyComponent } from "./enemy";
 import { TileComponent } from "./tile";
 import { SpawnManager } from "src/spawnManager";
 import { CurrencyManager } from "src/currencyManager";
+import { PermanentUpgradeManager } from "src/permanent_upgrade_manager";
 
 
 @Component("TurretComponent")
@@ -228,7 +229,8 @@ class TurretSystem implements ISystem {
 
                 // Apply damage
                 if (turret.targetEnemy) {
-                    turret.targetEnemy.health -= turret.damage
+                    turret.targetEnemy.health -= turret.damage + PermanentUpgradeManager.damageUpgrade.level;
+                    
                     turret.timeToNextShot = turret.timeBetweenShots()
 
                     let muzzlePosition = turret.getMuzzleGlobalPosition()

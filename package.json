@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@dcl/eslint-config": "^1.0.1",
-    "decentraland-ecs": "latest"
+    "decentraland-ecs": "^6.12.2"
   },
   "engines": {
     "node": ">=14.0.0",
@@ -22,6 +22,9 @@
     "yarn": "please use npm"
   },
   "bundledDependencies": [
+    "@dcl/ecs-scene-utils"
+  ],
+  "bundleDependencies": [
     "@dcl/ecs-scene-utils"
   ]
 }

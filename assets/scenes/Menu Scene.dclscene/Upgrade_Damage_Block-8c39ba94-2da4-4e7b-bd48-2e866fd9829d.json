@@ -1,0 +1,54 @@
+{
+  "customName": "Upgrade Damage Block",
+  "guid": "8c39ba94-2da4-4e7b-bd48-2e866fd9829d",
+  "parentGuid": null,
+  "hierarchyOrder": 1.0,
+  "isExposed": false,
+  "components": [
+    {
+      "nameInCode": "Transform",
+      "nameOfSlot": "Transform",
+      "properties": [
+        {
+          "name": "position",
+          "type": "Vector3",
+          "fixedValue": {
+            "x": 1.11138892,
+            "y": -0.286816955,
+            "z": 5.998955
+          }
+        },
+        {
+          "name": "rotation",
+          "type": "Quaternion",
+          "fixedValue": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          }
+        },
+        {
+          "name": "scale",
+          "type": "Vector3",
+          "fixedValue": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "nameInCode": "BoxShape",
+      "nameOfSlot": "Shape",
+      "properties": []
+    },
+    {
+      "nameInCode": "UpgradeButton",
+      "nameOfSlot": "UpgradeButton",
+      "properties": []
+    }
+  ],
+  "dclEditVersionNumber": "1.0.5"
+}
